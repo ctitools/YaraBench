@@ -1,0 +1,23 @@
+{
+  "id": "l1_ransomware_001",
+  "level": "level1",
+  "actionable": true,
+  "description": "Create a YARA rule to detect ransomware that creates files with .locked extension and contains the string 'Your files have been encrypted'",
+  "expected_strings": [
+    ".locked",
+    "Your files have been encrypted"
+  ],
+  "expected_keywords": [],
+  "test_files": [
+    {
+      "name": "ransom_note.txt",
+      "content_b64": "WW91ciBmaWxlcyBoYXZlIGJlZW4gZW5jcnlwdGVkLiBTZW5kIDEgQlRDIHRvIGdldCB5b3VyIGZpbGVzIGJhY2suIEFsbCBmaWxlcyBub3cgaGF2ZSAubG9ja2VkIGV4dGVuc2lvbi4=",
+      "should_match": true
+    },
+    {
+      "name": "benign.txt",
+      "content_b64": "VGhpcyBpcyBhIG5vcm1hbCBmaWxlIHdpdGggbm9ybWFsIGNvbnRlbnQu",
+      "should_match": false
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "l1_not_actionable_001",
+  "level": "level1",
+  "actionable": false,
+  "description": "Create a YARA rule to detect malware based solely on its behavior of consuming high CPU and memory resources",
+  "expected_strings": [],
+  "expected_keywords": [],
+  "test_files": [],
+  "metadata": {
+    "reason": "Runtime behavior cannot be detected by static YARA rules"
+  }
+}

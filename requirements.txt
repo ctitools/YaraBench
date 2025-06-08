@@ -1,0 +1,9 @@
+yara-python
+python-dotenv
+rich
+openai
+click
+pydantic
+aiohttp
+pytest
+huggingface-hub>=0.20.0

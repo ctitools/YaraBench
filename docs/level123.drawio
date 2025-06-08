@@ -1,0 +1,37 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0" version="27.1.4">
+  <diagram name="Page-1" id="jrljBYKSCOJ84LRRiKTZ">
+    <mxGraphModel dx="2951" dy="1143" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="DIY0UVDIRABpSkK2WtrH-4" value="" style="triangle;whiteSpace=wrap;html=1;rotation=-90;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=33;align=center;" vertex="1" parent="1">
+          <mxGeometry x="420" y="-110" width="827.7" height="1103.57" as="geometry" />
+        </mxCell>
+        <mxCell id="DIY0UVDIRABpSkK2WtrH-3" value="" style="triangle;whiteSpace=wrap;html=1;rotation=-90;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=33;align=center;" vertex="1" parent="1">
+          <mxGeometry x="553.02" y="-67.19" width="561.65" height="748.85" as="geometry" />
+        </mxCell>
+        <mxCell id="DIY0UVDIRABpSkK2WtrH-2" value="" style="triangle;whiteSpace=wrap;html=1;rotation=-90;fillColor=#f8cecc;strokeColor=#b85450;fontSize=33;align=center;" vertex="1" parent="1">
+          <mxGeometry x="693.85" y="-20.25" width="280" height="373.33" as="geometry" />
+        </mxCell>
+        <mxCell id="DIY0UVDIRABpSkK2WtrH-6" value="&lt;div&gt;Level 1&lt;/div&gt;&lt;div&gt;static examples, string matching&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Comic Sans MS;fontSize=33;" vertex="1" parent="1">
+          <mxGeometry x="383.26000000000005" y="790" width="901.16" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DIY0UVDIRABpSkK2WtrH-7" value="&lt;div&gt;Level 2&lt;/div&gt;&lt;div&gt;AI generated examples&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Comic Sans MS;fontSize=33;" vertex="1" parent="1">
+          <mxGeometry x="383.27000000000004" y="520" width="901.16" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DIY0UVDIRABpSkK2WtrH-8" value="&lt;div&gt;Level 3&lt;/div&gt;&lt;div&gt;real malware&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Comic Sans MS;fontSize=33;" vertex="1" parent="1">
+          <mxGeometry x="383.27000000000004" y="230" width="901.16" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DIY0UVDIRABpSkK2WtrH-9" value="🧸" style="text;whiteSpace=wrap;html=1;fontSize=100;" vertex="1" parent="1">
+          <mxGeometry x="770" y="620" width="50" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DIY0UVDIRABpSkK2WtrH-10" value="🤖" style="text;whiteSpace=wrap;html=1;fontSize=100;" vertex="1" parent="1">
+          <mxGeometry x="770" y="353.08" width="50" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DIY0UVDIRABpSkK2WtrH-11" value="🦠" style="text;whiteSpace=wrap;html=1;fontSize=100;" vertex="1" parent="1">
+          <mxGeometry x="780" y="90" width="50" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

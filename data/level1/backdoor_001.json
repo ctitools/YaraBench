@@ -1,0 +1,23 @@
+{
+  "id": "l1_backdoor_001",
+  "level": "level1",
+  "actionable": true,
+  "description": "Create a YARA rule to detect a backdoor that connects to command and control server 'malicious.example.com' on port 4444",
+  "expected_strings": [
+    "malicious.example.com",
+    "4444"
+  ],
+  "expected_keywords": [],
+  "test_files": [
+    {
+      "name": "backdoor.exe",
+      "content_b64": "Q09OTkVDVElORyBUTyBtYWxpY2lvdXMuZXhhbXBsZS5jb206NDQ0NAo=",
+      "should_match": true
+    },
+    {
+      "name": "legitimate.exe",
+      "content_b64": "TGVnaXRpbWF0ZSBwcm9ncmFtIGNvbm5lY3RpbmcgdG8gZ29vZ2xlLmNvbQ==",
+      "should_match": false
+    }
+  ]
+}

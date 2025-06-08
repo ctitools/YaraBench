@@ -1,0 +1,45 @@
+# Environment
+.env
+venv/
+env/
+
+# Python
+.python-version
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# Output files
+*.csv
+*.log
+output/
+results.json
+benchmark_results.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+CLAUDE.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Cache
+.cache/
+
+# Downloaded challenges from HuggingFace (but keep demo files)
+# The demo files in data/level1/ are tracked in git
+# Additional challenges downloaded from HF will be ignored
+data/level1/*_hf_*.json
+data/level2/*.json
+data/level3/*.json
+!data/**/.keep

@@ -1,0 +1,23 @@
+{
+  "id": "l1_registry_persistence",
+  "level": "level1",
+  "actionable": true,
+  "description": "Create a YARA rule to detect malware that achieves persistence by modifying the Windows registry Run key",
+  "expected_strings": [
+    "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
+    "RegSetValueEx"
+  ],
+  "expected_keywords": [],
+  "test_files": [
+    {
+      "name": "persistence_malware.exe",
+      "content_b64": "Q2FsbGluZyBSZWdTZXRWYWx1ZUV4IHRvIGFkZCBrZXkgdG8gU09GVFdBUkVcTWljcm9zb2Z0XFdpbmRvd3NcQ3VycmVudFZlcnNpb25cUnVu",
+      "should_match": true
+    },
+    {
+      "name": "normal_app.exe",
+      "content_b64": "Tm9ybWFsIGFwcGxpY2F0aW9uIHRoYXQgZG9lc24ndCBtb2RpZnkgcmVnaXN0cnk=",
+      "should_match": false
+    }
+  ]
+}

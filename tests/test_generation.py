@@ -47,12 +47,12 @@ class MockLLMClient:
             })
         elif "pe_analysis" in prompt or "PE analysis" in prompt:
             return json.dumps({
-                "description": "Create a YARA rule to detect PE files with UPX packer. Remember to import the PE module with 'import \"pe\"' at the top of your rule.",
+                "description": "Create a YARA rule to detect PE files with UPX packer using string-based detection.",
                 "packer": "UPX",
                 "import_function": "GetProcAddress",
                 "section_name": ".upx1",
                 "version_info": "UPX Packed",
-                "expected_keywords": ["pe"]
+                "expected_keywords": []
             })
         else:
             # Fallback

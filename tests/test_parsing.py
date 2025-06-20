@@ -84,11 +84,11 @@ class TestYaraExtractor:
     def test_extract_rule_with_imports(self):
         """Test extracting rule with imports."""
         text = """
-        import "pe"
+        import "cuckoo"
         
-        rule PERule {
+        rule ImportRule {
             condition:
-                pe.is_pe
+                cuckoo.network.http_request(/evil\.com/)
         }
         """
         
@@ -96,10 +96,10 @@ class TestYaraExtractor:
         assert len(rules) == 1
         
         rule = rules[0]
-        assert "rule PERule" in rule
-        assert "pe.is_pe" in rule
+        assert "rule ImportRule" in rule
+        assert "cuckoo.network" in rule
         # Import should be included
-        assert 'import "pe"' in rule
+        assert 'import "cuckoo"' in rule
     
     def test_extract_single_rule(self):
         """Test extracting single rule from multiple."""

@@ -81,18 +81,18 @@ Focus on file drops, modifications, and persistence mechanisms.""",
                 "type": "pe_analysis", 
                 "prompt_template": """Based on this malware behavior: "{seed}"
 
-Create a PE analysis YARA challenge. Respond with JSON only:
+Create a PE analysis YARA challenge that focuses on string-based detection. Respond with JSON only:
 {{
-  "description": "Challenge description for PE file analysis (mention PE import)",
+  "description": "Challenge description for PE file analysis using string detection (avoid mentioning modules)",
   "packer": "packer or obfuscation method",
   "import_function": "suspicious import function",
   "section_name": "distinctive section name",
   "version_info": "version information string",
-  "expected_keywords": ["pe"]
+  "expected_keywords": []
 }}
 
-Must require PE module analysis for detection.""",
-                "expected_keywords": ["pe"]
+Focus on string-based detection rather than module-based analysis.""",
+                "expected_keywords": []
             }
         ]
     

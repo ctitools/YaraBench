@@ -22,6 +22,9 @@ YaraBench provides a standardized way to measure and compare LLM performance in 
 - **Multi-Model Support**: Compare multiple LLMs in a single run
 - **Error Recovery**: Graceful handling of API failures and malformed rules
 - **Extensible Architecture**: Pluggable evaluators and challenge levels
+- **String-Based Detection Focus**: Optimized for basic YARA features (strings, conditions, meta) rather than complex module analysis
+
+**Note**: YARA module support (PE, ELF, etc.) is left for future work. The current benchmark focuses on string-based detection capabilities, which are more universally applicable and less dependent on specific YARA configurations.
 
 ## Quick Start
 

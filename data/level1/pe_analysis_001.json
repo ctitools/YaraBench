@@ -2,14 +2,12 @@
   "id": "l1_pe_analysis_001",
   "level": "level1",
   "actionable": true,
-  "description": "Create a YARA rule to detect PE files with 'UPX' packer signature and containing the string 'system32'. Remember to import the PE module with 'import \"pe\"' at the top of your rule.",
+  "description": "Create a YARA rule to detect PE files with 'UPX' packer signature and containing the string 'system32'. Use string-based detection rather than module analysis.",
   "expected_strings": [
     "UPX",
     "system32"
   ],
-  "expected_keywords": [
-    "pe"
-  ],
+  "expected_keywords": [],
   "test_files": [
     {
       "name": "upx_packed.exe",

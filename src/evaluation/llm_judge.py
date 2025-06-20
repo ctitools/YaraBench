@@ -131,7 +131,7 @@ Be strict but fair. Consider:
 - Logic accuracy
 - String matching appropriateness
 - Condition complexity
-- Module usage (if required)
+- Preference for string-based detection over module usage
 - Potential for false positives/negatives"""
         
         return prompt
@@ -151,8 +151,9 @@ Be strict but fair. Consider:
 2. Provide constructive feedback
 3. Score rules fairly on multiple criteria
 4. Return structured JSON responses
+5. Prefer string-based detection over module usage when possible
 
-Be thorough but concise in your evaluations."""
+Be thorough but concise in your evaluations. Encourage simple, effective rules that use string matching rather than complex module-based analysis."""
         
         # If we have a custom judge model, we'd use it here
         # For now, use the standard generate method

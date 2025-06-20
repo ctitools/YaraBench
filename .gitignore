@@ -1,5 +1,6 @@
 # Environment
 .env
+.venv/
 venv/
 env/
 
@@ -18,7 +19,6 @@ build/
 # Output files
 *.csv
 *.log
-output/
 results.json
 benchmark_results.json
 

@@ -346,7 +346,8 @@ def download(token: Optional[str], repo_id: str, force: bool):
     cache_dir = base_path / ".cache" / "huggingface"
     
     # Count existing HF challenges
-    existing_hf = list(data_path.glob("level*/*_hf_*.json"))
+    import builtins
+    existing_hf = builtins.list(data_path.glob("level*/*_hf_*.json"))
     if existing_hf and not force:
         console.print(f"[yellow]Found {len(existing_hf)} existing HuggingFace challenges[/yellow]")
         console.print("Use --force to re-download")
@@ -374,9 +375,14 @@ def download(token: Optional[str], repo_id: str, force: bool):
         copied_files = 0
         skipped_files = 0
         
-        for level_dir in downloaded_path.glob("level*"):
+        # Check for both direct level* directories and data/level* structure
+        level_dirs = builtins.list(downloaded_path.glob("level*")) + builtins.list(downloaded_path.glob("data/level*"))
+        
+        for level_dir in level_dirs:
             if level_dir.is_dir():
-                target_dir = data_path / level_dir.name
+                # Extract just the level name (e.g., "level1" from "data/level1")
+                level_name = level_dir.name
+                target_dir = data_path / level_name
                 target_dir.mkdir(parents=True, exist_ok=True)
                 
                 for json_file in level_dir.glob("*.json"):
@@ -389,7 +395,7 @@ def download(token: Optional[str], repo_id: str, force: bool):
                         continue
                     
                     shutil.copy2(json_file, target_file)
-                    console.print(f"  [green]✓[/green] {level_dir.name}/{target_file.name}")
+                    console.print(f"  [green]✓[/green] {level_name}/{target_file.name}")
                     copied_files += 1
         
         # Summary
@@ -399,8 +405,8 @@ def download(token: Optional[str], repo_id: str, force: bool):
             console.print(f"  Skipped: {skipped_files} existing files")
         
         # Count total challenges
-        total_challenges = len(list(data_path.glob("level*/*.json")))
-        demo_challenges = total_challenges - len(list(data_path.glob("level*/*_hf_*.json")))
+        total_challenges = len(builtins.list(data_path.glob("level*/*.json")))
+        demo_challenges = total_challenges - len(builtins.list(data_path.glob("level*/*_hf_*.json")))
         
         console.print(f"\nTotal challenges available: {total_challenges}")
         console.print(f"  Demo challenges: {demo_challenges}")

@@ -1,0 +1,752 @@
+[
+  {
+    "model": "anthropic/claude-opus-4",
+    "levels": [
+      "level1"
+    ],
+    "total_challenges": 32,
+    "successful_challenges": 30,
+    "average_score": 0.8635416666666668,
+    "total_time_ms": 192189.62359428406,
+    "results": [
+      {
+        "challenge_id": "l1_advanced_ransomware_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule AdvancedRansomware_MultipleIndicators {\n    meta:\n        description = \"Detects advanced ransomware with multiple encryption indicators and payment methods\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        severity = \"critical\"\n        category = \"ransomware\"\n        \n    strings:\n        // File encryption indicators\n        $enc1 = \".encrypt\" nocase\n        $enc2 = \".encrypted\" nocase\n        $enc3 = \".locked\" nocase\n        $enc4 = \".crypto\" nocase\n        $enc5 = \"AES-256\" nocase\n        $enc6 = \"RSA-2048\" nocase\n        \n        // Payment method indicators\n        $pay1 = \"bitcoin address\" nocase\n        $pay2 = \"btc address\" nocase\n        $pay3 = \"bitcoin wallet\" nocase\n        $pay4 = \"monero\" nocase\n        $pay5 = \"send payment\" nocase\n        $pay6 = \"ransom\" nocase\n        \n        // Shadow copy deletion indicators\n        $shadow1 = \"shadow copies\" nocase\n        $shadow2 = \"shadowcopy\" nocase\n        $shadow3 = \"vssadmin delete shadows\" nocase\n        $shadow4 = \"wmic shadowcopy delete\" nocase\n        $shadow5 = \"bcdedit /set {default} recoveryenabled no\" nocase\n        \n        // Additional ransomware indicators\n        $note1 = \"your files have been encrypted\" nocase\n        $note2 = \"decrypt your files\" nocase\n        $note3 = \"payment instructions\" nocase\n        $note4 = \"do not attempt to decrypt\" nocase\n        \n    condition:\n        // Must have at least one from each category\n        any of ($enc*) and \n        any of ($pay*) and \n        any of ($shadow*) and\n        // Plus at least one ransomware note indicator\n        any of ($note*)\n}",
+        "generated_response": "```yara\nrule AdvancedRansomware_MultipleIndicators\n{\n    meta:\n        description = \"Detects advanced ransomware with multiple encryption indicators and payment methods\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        severity = \"critical\"\n        category = \"ransomware\"\n        \n    strings:\n        // File encryption indicators\n        $enc1 = \".encrypt\" nocase\n        $enc2 = \".encrypted\" nocase\n        $enc3 = \".locked\" nocase\n        $enc4 = \".crypto\" nocase\n        $enc5 = \"AES-256\" nocase\n        $enc6 = \"RSA-2048\" nocase\n        \n        // Payment method indicators\n        $pay1 = \"bitcoin address\" nocase\n        $pay2 = \"btc address\" nocase\n        $pay3 = \"bitcoin wallet\" nocase\n        $pay4 = \"monero\" nocase\n        $pay5 = \"send payment\" nocase\n        $pay6 = \"ransom\" nocase\n        \n        // Shadow copy deletion indicators\n        $shadow1 = \"shadow copies\" nocase\n        $shadow2 = \"shadowcopy\" nocase\n        $shadow3 = \"vssadmin delete shadows\" nocase\n        $shadow4 = \"wmic shadowcopy delete\" nocase\n        $shadow5 = \"bcdedit /set {default} recoveryenabled no\" nocase\n        \n        // Additional ransomware indicators\n        $note1 = \"your files have been encrypted\" nocase\n        $note2 = \"decrypt your files\" nocase\n        $note3 = \"payment instructions\" nocase\n        $note4 = \"do not attempt to decrypt\" nocase\n        \n    condition:\n        // Must have at least one from each category\n        any of ($enc*) and \n        any of ($pay*) and \n        any of ($shadow*) and\n        // Plus at least one ransomware note indicator\n        any of ($note*)\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "advanced_ransom.exe": false,
+          "backup_tool.exe": false,
+          "crypto_wallet.exe": false
+        },
+        "expected_strings_found": [
+          ".encrypt",
+          "bitcoin address",
+          "shadow copies"
+        ],
+        "expected_keywords_found": [],
+        "score": 0.8666666666666667,
+        "error": null,
+        "latency_ms": 9977.459907531738,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_anti_vm_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule VM_Detection_Sandbox_Evasion {\n    meta:\n        description = \"Detects malware with VM detection and sandbox evasion techniques\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        category = \"anti-vm\"\n        \n    strings:\n        $vm1 = \"VMware\" nocase\n        $vm2 = \"VirtualBox\" nocase\n        $vm3 = \"VBOX\" nocase\n        $vm4 = \"QEMU\" nocase\n        $vm5 = \"Xen\" nocase\n        $vm6 = \"Virtual HD\" nocase\n        $vm7 = \"vboxservice\" nocase\n        $vm8 = \"vboxtray\" nocase\n        $vm9 = \"vmtoolsd\" nocase\n        $vm10 = \"vmwaretray\" nocase\n        $vm11 = \"vmwareuser\" nocase\n        $vm12 = \"VBoxMouse\" nocase\n        $vm13 = \"VBoxGuest\" nocase\n        $vm14 = \"VBoxSF\" nocase\n        $vm15 = \"VBoxVideo\" nocase\n        \n        $sandbox1 = \"SbieDll.dll\" nocase\n        $sandbox2 = \"SandboxieControlWndClass\" nocase\n        $sandbox3 = \"currentuser\\\\software\\\\wine\" nocase\n        $sandbox4 = \"wireshark\" nocase\n        $sandbox5 = \"sysinternals\" nocase\n        $sandbox6 = \"procmon\" nocase\n        $sandbox7 = \"processmonitor\" nocase\n        $sandbox8 = \"regmon\" nocase\n        $sandbox9 = \"filemon\" nocase\n        $sandbox10 = \"cuckoo\" nocase\n        \n        $detect1 = \"IsDebuggerPresent\"\n        $detect2 = \"CheckRemoteDebuggerPresent\"\n        $detect3 = \"NtQueryInformationProcess\"\n        $detect4 = \"GetTickCount\"\n        $detect5 = \"Sleep\"\n        \n    condition:\n        uint16(0) == 0x5A4D and \n        (\n            (2 of ($vm*)) or \n            (1 of ($vm*) and 1 of ($sandbox*)) or\n            (1 of ($vm*) and 2 of ($detect*)) or\n            (3 of ($sandbox*)) or\n            (1 of ($sandbox*) and 2 of ($detect*))\n        )\n}",
+        "generated_response": "```yara\nrule VM_Detection_Sandbox_Evasion\n{\n    meta:\n        description = \"Detects malware with VM detection and sandbox evasion techniques\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        category = \"anti-vm\"\n        \n    strings:\n        $vm1 = \"VMware\" nocase\n        $vm2 = \"VirtualBox\" nocase\n        $vm3 = \"VBOX\" nocase\n        $vm4 = \"QEMU\" nocase\n        $vm5 = \"Xen\" nocase\n        $vm6 = \"Virtual HD\" nocase\n        $vm7 = \"vboxservice\" nocase\n        $vm8 = \"vboxtray\" nocase\n        $vm9 = \"vmtoolsd\" nocase\n        $vm10 = \"vmwaretray\" nocase\n        $vm11 = \"vmwareuser\" nocase\n        $vm12 = \"VBoxMouse\" nocase\n        $vm13 = \"VBoxGuest\" nocase\n        $vm14 = \"VBoxSF\" nocase\n        $vm15 = \"VBoxVideo\" nocase\n        \n        $sandbox1 = \"SbieDll.dll\" nocase\n        $sandbox2 = \"SandboxieControlWndClass\" nocase\n        $sandbox3 = \"currentuser\\\\software\\\\wine\" nocase\n        $sandbox4 = \"wireshark\" nocase\n        $sandbox5 = \"sysinternals\" nocase\n        $sandbox6 = \"procmon\" nocase\n        $sandbox7 = \"processmonitor\" nocase\n        $sandbox8 = \"regmon\" nocase\n        $sandbox9 = \"filemon\" nocase\n        $sandbox10 = \"cuckoo\" nocase\n        \n        $detect1 = \"IsDebuggerPresent\"\n        $detect2 = \"CheckRemoteDebuggerPresent\"\n        $detect3 = \"NtQueryInformationProcess\"\n        $detect4 = \"GetTickCount\"\n        $detect5 = \"Sleep\"\n        \n    condition:\n        uint16(0) == 0x5A4D and \n        (\n            (2 of ($vm*)) or \n            (1 of ($vm*) and 1 of ($sandbox*)) or\n            (1 of ($vm*) and 2 of ($detect*)) or\n            (3 of ($sandbox*)) or\n            (1 of ($sandbox*) and 2 of ($detect*))\n        )\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "vm_aware_malware.exe": false,
+          "vbox_check.exe": false,
+          "system_info.exe": false
+        },
+        "expected_strings_found": [
+          "VMware",
+          "VirtualBox",
+          "VBOX"
+        ],
+        "expected_keywords_found": [
+          "or"
+        ],
+        "score": 0.7333333333333333,
+        "error": null,
+        "latency_ms": 12404.832363128662,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_backdoor_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule Backdoor_C2_Connection {\n    meta:\n        description = \"Detects backdoor connecting to malicious.example.com on port 4444\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        severity = \"high\"\n        category = \"backdoor\"\n        \n    strings:\n        $c2_domain = \"malicious.example.com\" ascii wide nocase\n        $c2_port = \"4444\" ascii wide\n        \n    condition:\n        all of them\n}",
+        "generated_response": "```yara\nrule Backdoor_C2_Connection {\n    meta:\n        description = \"Detects backdoor connecting to malicious.example.com on port 4444\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        severity = \"high\"\n        category = \"backdoor\"\n        \n    strings:\n        $c2_domain = \"malicious.example.com\" ascii wide nocase\n        $c2_port = \"4444\" ascii wide\n        \n    condition:\n        all of them\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "backdoor.exe": true,
+          "legitimate.exe": false
+        },
+        "expected_strings_found": [
+          "malicious.example.com",
+          "4444"
+        ],
+        "expected_keywords_found": [],
+        "score": 1.0,
+        "error": null,
+        "latency_ms": 4613.2354736328125,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_base64_obfuscation_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule Base64_Command_Obfuscation {\n    meta:\n        description = \"Detects malware using Base64 encoding for command obfuscation\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        severity = \"high\"\n        \n    strings:\n        $ps = \"powershell\" nocase\n        $encoded = \"-EncodedCommand\" nocase\n        $b64_padding = \"==\"\n        $b64_space = \"IA\"  // Base64 for space character\n        \n    condition:\n        $ps and $encoded and ($b64_padding or $b64_space)\n}",
+        "generated_response": "```yara\nrule Base64_Command_Obfuscation\n{\n    meta:\n        description = \"Detects malware using Base64 encoding for command obfuscation\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        severity = \"high\"\n        \n    strings:\n        $ps = \"powershell\" nocase\n        $encoded = \"-EncodedCommand\" nocase\n        $b64_padding = \"==\"\n        $b64_space = \"IA\"  // Base64 for space character\n        \n    condition:\n        $ps and $encoded and ($b64_padding or $b64_space)\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "encoded_powershell.exe": true,
+          "normal_powershell.exe": false,
+          "base64_data.exe": false
+        },
+        "expected_strings_found": [
+          "powershell",
+          "-EncodedCommand",
+          "==",
+          "IA"
+        ],
+        "expected_keywords_found": [
+          "and"
+        ],
+        "score": 1.0,
+        "error": null,
+        "latency_ms": 5385.8208656311035,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_behavior_only_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": null,
+        "generated_response": "I cannot create an effective YARA rule for this scenario. Here's why:\n\nYARA rules are designed for static analysis - they scan files, memory, or processes for specific patterns, strings, or structural characteristics that exist in the binary or memory at the time of scanning. They cannot detect behaviors that only manifest during runtime execution.\n\nRuntime-only suspicious behaviors might include:\n- Dynamic API resolution\n- Time-based triggers\n- Environment-specific actions\n- Network communication patterns\n- Process injection techniques\n- Registry modifications\n- File system changes\n\nThese behaviors require dynamic analysis tools such as:\n- Sandbox environments\n- Behavioral monitoring systems\n- EDR (Endpoint Detection and Response) solutions\n- Dynamic malware analysis frameworks\n\nWhile YARA can detect some artifacts left by runtime behavior (like injected code in memory or specific strings that appear after unpacking), it cannot detect behavior that leaves no static traces. For purely behavioral detection, you would need runtime monitoring solutions that can observe and analyze the actual execution of the program.",
+        "valid_syntax": true,
+        "execution_results": {},
+        "expected_strings_found": [],
+        "expected_keywords_found": [],
+        "score": 1.0,
+        "error": null,
+        "latency_ms": 8644.19937133789,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_condition_all_of_them_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule DetectWindowsAPIFunctions {\n    meta:\n        description = \"Detects files containing CreateProcess, WriteFile, and RegOpenKey API functions\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $api1 = \"CreateProcess\"\n        $api2 = \"WriteFile\"\n        $api3 = \"RegOpenKey\"\n        \n    condition:\n        all of them\n}",
+        "generated_response": "```yara\nrule DetectWindowsAPIFunctions\n{\n    meta:\n        description = \"Detects files containing CreateProcess, WriteFile, and RegOpenKey API functions\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $api1 = \"CreateProcess\"\n        $api2 = \"WriteFile\"\n        $api3 = \"RegOpenKey\"\n        \n    condition:\n        all of them\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "full_malware.exe": true,
+          "partial_malware.exe": false,
+          "benign.exe": false
+        },
+        "expected_strings_found": [
+          "CreateProcess",
+          "WriteFile",
+          "RegOpenKey"
+        ],
+        "expected_keywords_found": [
+          "all",
+          "of",
+          "them"
+        ],
+        "score": 1.0,
+        "error": null,
+        "latency_ms": 4290.019989013672,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_condition_boolean_and_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule DetectCmdAndPowershell {\n    meta:\n        description = \"Detects files containing both cmd.exe and powershell.exe\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $cmd = \"cmd.exe\" nocase\n        $powershell = \"powershell.exe\" nocase\n        \n    condition:\n        $cmd and $powershell\n}",
+        "generated_response": "```yara\nrule DetectCmdAndPowershell\n{\n    meta:\n        description = \"Detects files containing both cmd.exe and powershell.exe\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $cmd = \"cmd.exe\" nocase\n        $powershell = \"powershell.exe\" nocase\n        \n    condition:\n        $cmd and $powershell\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "dual_shell.exe": true,
+          "cmd_only.exe": false,
+          "powershell_only.exe": false,
+          "clean.exe": false
+        },
+        "expected_strings_found": [
+          "cmd.exe",
+          "powershell.exe"
+        ],
+        "expected_keywords_found": [
+          "and"
+        ],
+        "score": 1.0,
+        "error": null,
+        "latency_ms": 3621.8132972717285,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_condition_boolean_or_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule Tor_Network_References {\n    meta:\n        description = \"Detects files containing Tor network references (.onion domains or tor2web proxy)\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        reference = \"Tor hidden services and proxy detection\"\n        \n    strings:\n        $onion = \".onion\" nocase\n        $tor2web = \"tor2web\" nocase\n        \n    condition:\n        $onion or $tor2web\n}",
+        "generated_response": "```yara\nrule Tor_Network_References\n{\n    meta:\n        description = \"Detects files containing Tor network references (.onion domains or tor2web proxy)\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        reference = \"Tor hidden services and proxy detection\"\n        \n    strings:\n        $onion = \".onion\" nocase\n        $tor2web = \"tor2web\" nocase\n        \n    condition:\n        $onion or $tor2web\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "tor_c2.exe": true,
+          "tor_proxy.exe": true,
+          "both_tor.exe": true,
+          "clean.exe": false
+        },
+        "expected_strings_found": [
+          ".onion",
+          "tor2web"
+        ],
+        "expected_keywords_found": [
+          "or"
+        ],
+        "score": 1.0,
+        "error": null,
+        "latency_ms": 4394.590377807617,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_condition_not_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule Suspicious_Encryption_Activity {\n    meta:\n        description = \"Detects files containing 'encrypt' but NOT 'legitimate' or 'Microsoft'\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $encrypt = \"encrypt\" nocase\n        $legitimate = \"legitimate\" nocase\n        $microsoft = \"Microsoft\" nocase\n        \n    condition:\n        $encrypt and not ($legitimate or $microsoft)\n}",
+        "generated_response": "```yara\nrule Suspicious_Encryption_Activity\n{\n    meta:\n        description = \"Detects files containing 'encrypt' but NOT 'legitimate' or 'Microsoft'\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $encrypt = \"encrypt\" nocase\n        $legitimate = \"legitimate\" nocase\n        $microsoft = \"Microsoft\" nocase\n        \n    condition:\n        $encrypt and not ($legitimate or $microsoft)\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "malicious_crypto.exe": true,
+          "legitimate_crypto.exe": false,
+          "microsoft_crypto.exe": false,
+          "no_crypto.exe": false
+        },
+        "expected_strings_found": [
+          "encrypt",
+          "legitimate",
+          "Microsoft"
+        ],
+        "expected_keywords_found": [
+          "not",
+          "and"
+        ],
+        "score": 1.0,
+        "error": null,
+        "latency_ms": 3555.2303791046143,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_condition_x_of_them_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule SuspiciousAuthenticationStrings {\n    meta:\n        description = \"Detects files containing at least 2 authentication-related suspicious strings\"\n        author = \"Security Analyst\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $s1 = \"password\" nocase\n        $s2 = \"credential\" nocase\n        $s3 = \"login\" nocase\n        $s4 = \"admin\" nocase\n        \n    condition:\n        2 of them\n}",
+        "generated_response": "```yara\nrule SuspiciousAuthenticationStrings\n{\n    meta:\n        description = \"Detects files containing at least 2 authentication-related suspicious strings\"\n        author = \"Security Analyst\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $s1 = \"password\" nocase\n        $s2 = \"credential\" nocase\n        $s3 = \"login\" nocase\n        $s4 = \"admin\" nocase\n        \n    condition:\n        2 of them\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "stealer1.exe": true,
+          "stealer2.exe": true,
+          "single_match.exe": false,
+          "clean.exe": false
+        },
+        "expected_strings_found": [
+          "password",
+          "credential",
+          "login",
+          "admin"
+        ],
+        "expected_keywords_found": [
+          "2",
+          "of",
+          "them"
+        ],
+        "score": 1.0,
+        "error": null,
+        "latency_ms": 4457.043647766113,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_cryptominer_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule CryptocurrencyMiningMalware {\n    meta:\n        description = \"Detects cryptocurrency mining malware with mining pool references and wallet addresses\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        category = \"cryptominer\"\n        \n    strings:\n        $stratum = \"stratum+tcp://\" nocase\n        $pool1 = \"pool.supportxmr.com\" nocase\n        $wallet = \"wallet\" nocase\n        \n        // Additional common mining pool indicators\n        $pool2 = \".pool.\" nocase\n        $pool3 = \"mining.pool\" nocase\n        $pool4 = \"miningpool\" nocase\n        \n        // Common mining-related strings\n        $mining1 = \"xmrig\" nocase\n        $mining2 = \"monero\" nocase\n        $mining3 = \"hashrate\" nocase\n        $mining4 = \"nicehash\" nocase\n        \n        // Wallet address patterns (common cryptocurrency formats)\n        $btc_wallet = /[13][a-km-zA-HJ-NP-Z1-9]{25,34}/\n        $xmr_wallet = /4[0-9AB][0-9a-zA-Z]{93}/\n        $eth_wallet = /0x[a-fA-F0-9]{40}/\n        \n    condition:\n        $stratum and \n        ($pool1 or any of ($pool*)) and \n        ($wallet or any of ($*_wallet)) and\n        any of ($mining*)\n}",
+        "generated_response": "```yara\nrule CryptocurrencyMiningMalware\n{\n    meta:\n        description = \"Detects cryptocurrency mining malware with mining pool references and wallet addresses\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        category = \"cryptominer\"\n        \n    strings:\n        $stratum = \"stratum+tcp://\" nocase\n        $pool1 = \"pool.supportxmr.com\" nocase\n        $wallet = \"wallet\" nocase\n        \n        // Additional common mining pool indicators\n        $pool2 = \".pool.\" nocase\n        $pool3 = \"mining.pool\" nocase\n        $pool4 = \"miningpool\" nocase\n        \n        // Common mining-related strings\n        $mining1 = \"xmrig\" nocase\n        $mining2 = \"monero\" nocase\n        $mining3 = \"hashrate\" nocase\n        $mining4 = \"nicehash\" nocase\n        \n        // Wallet address patterns (common cryptocurrency formats)\n        $btc_wallet = /[13][a-km-zA-HJ-NP-Z1-9]{25,34}/\n        $xmr_wallet = /4[0-9AB][0-9a-zA-Z]{93}/\n        $eth_wallet = /0x[a-fA-F0-9]{40}/\n        \n    condition:\n        $stratum and \n        ($pool1 or any of ($pool*)) and \n        ($wallet or any of ($*_wallet)) and\n        any of ($mining*)\n}\n```",
+        "valid_syntax": false,
+        "execution_results": {},
+        "expected_strings_found": [],
+        "expected_keywords_found": [],
+        "score": 0.1,
+        "error": "YARA syntax error: line 32: syntax error, unexpected identifier, expecting ')' or ','",
+        "latency_ms": 9136.707067489624,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_dropper_loader_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule MultiStageDropperWithDecryption {\n    meta:\n        description = \"Detects multi-stage malware droppers with payload decryption capabilities\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        severity = \"high\"\n        category = \"dropper\"\n        \n    strings:\n        $api1 = \"VirtualAlloc\" ascii wide\n        $api2 = \"CryptDecrypt\" ascii wide\n        $stage = \"stage2.bin\" ascii wide nocase\n        \n        // Additional common dropper indicators\n        $api3 = \"WriteProcessMemory\" ascii wide\n        $api4 = \"CreateRemoteThread\" ascii wide\n        $api5 = \"SetThreadContext\" ascii wide\n        \n        // Common decryption-related APIs\n        $crypt1 = \"CryptAcquireContext\" ascii wide\n        $crypt2 = \"CryptImportKey\" ascii wide\n        $crypt3 = \"CryptDestroyKey\" ascii wide\n        \n        // Suspicious file operations\n        $file1 = \"CreateFile\" ascii wide\n        $file2 = \"ReadFile\" ascii wide\n        $file3 = \"WriteFile\" ascii wide\n        \n    condition:\n        uint16(0) == 0x5A4D and // MZ header\n        filesize < 5MB and\n        all of ($api1, $api2, $stage) and\n        2 of ($api3, $api4, $api5) and\n        2 of ($crypt*) and\n        2 of ($file*)\n}",
+        "generated_response": "```yara\nrule MultiStageDropperWithDecryption\n{\n    meta:\n        description = \"Detects multi-stage malware droppers with payload decryption capabilities\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        severity = \"high\"\n        category = \"dropper\"\n        \n    strings:\n        $api1 = \"VirtualAlloc\" ascii wide\n        $api2 = \"CryptDecrypt\" ascii wide\n        $stage = \"stage2.bin\" ascii wide nocase\n        \n        // Additional common dropper indicators\n        $api3 = \"WriteProcessMemory\" ascii wide\n        $api4 = \"CreateRemoteThread\" ascii wide\n        $api5 = \"SetThreadContext\" ascii wide\n        \n        // Common decryption-related APIs\n        $crypt1 = \"CryptAcquireContext\" ascii wide\n        $crypt2 = \"CryptImportKey\" ascii wide\n        $crypt3 = \"CryptDestroyKey\" ascii wide\n        \n        // Suspicious file operations\n        $file1 = \"CreateFile\" ascii wide\n        $file2 = \"ReadFile\" ascii wide\n        $file3 = \"WriteFile\" ascii wide\n        \n    condition:\n        uint16(0) == 0x5A4D and // MZ header\n        filesize < 5MB and\n        all of ($api1, $api2, $stage) and\n        2 of ($api3, $api4, $api5) and\n        2 of ($crypt*) and\n        2 of ($file*)\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "encrypted_dropper.exe": false,
+          "simple_dropper.exe": false,
+          "legitimate_crypto.exe": false
+        },
+        "expected_strings_found": [
+          "VirtualAlloc",
+          "CryptDecrypt",
+          "stage2.bin"
+        ],
+        "expected_keywords_found": [],
+        "score": 0.8666666666666667,
+        "error": null,
+        "latency_ms": 8835.020542144775,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_false_positive_risk_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule Detect_Windows_String {\n    meta:\n        description = \"Detects files containing the string 'Windows'\"\n        author = \"Security Analyst\"\n        date = \"2024-01-01\"\n        severity = \"low\"\n        \n    strings:\n        $windows1 = \"Windows\" nocase\n        $windows2 = \"WINDOWS\"\n        $windows3 = \"windows\"\n        \n    condition:\n        any of them\n}",
+        "generated_response": "```yara\nrule Detect_Windows_String\n{\n    meta:\n        description = \"Detects files containing the string 'Windows'\"\n        author = \"Security Analyst\"\n        date = \"2024-01-01\"\n        severity = \"low\"\n        \n    strings:\n        $windows1 = \"Windows\" nocase\n        $windows2 = \"WINDOWS\"\n        $windows3 = \"windows\"\n        \n    condition:\n        any of them\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {},
+        "expected_strings_found": [],
+        "expected_keywords_found": [],
+        "score": 0.6,
+        "error": null,
+        "latency_ms": 4403.923511505127,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_filesize_exact_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule Dropper_128_Bytes {\n    meta:\n        description = \"Detects files exactly 128 bytes in size containing the string 'dropper'\"\n        author = \"Security Analyst\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $s1 = \"dropper\" nocase\n        \n    condition:\n        filesize == 128 and $s1\n}",
+        "generated_response": "```yara\nrule Dropper_128_Bytes {\n    meta:\n        description = \"Detects files exactly 128 bytes in size containing the string 'dropper'\"\n        author = \"Security Analyst\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $s1 = \"dropper\" nocase\n        \n    condition:\n        filesize == 128 and $s1\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "exact_dropper.exe": false,
+          "wrong_size_dropper.exe": false,
+          "exact_size_no_string.exe": false
+        },
+        "expected_strings_found": [
+          "dropper"
+        ],
+        "expected_keywords_found": [
+          "filesize"
+        ],
+        "score": 0.8666666666666667,
+        "error": null,
+        "latency_ms": 4546.8645095825195,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_filesize_range_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule Small_Executable_With_Payload {\n    meta:\n        description = \"Detects small executables (less than 5KB) containing 'payload' string\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $payload = \"payload\" nocase\n        \n    condition:\n        filesize < 5KB and $payload\n}",
+        "generated_response": "```yara\nrule Small_Executable_With_Payload\n{\n    meta:\n        description = \"Detects small executables (less than 5KB) containing 'payload' string\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $payload = \"payload\" nocase\n        \n    condition:\n        filesize < 5KB and $payload\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "tiny_payload.exe": true,
+          "large_payload.exe": true,
+          "small_no_payload.exe": false
+        },
+        "expected_strings_found": [
+          "payload"
+        ],
+        "expected_keywords_found": [
+          "filesize",
+          "<"
+        ],
+        "score": 0.8666666666666667,
+        "error": null,
+        "latency_ms": 3567.7530765533447,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_infostealer_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule InfoStealer_BrowserData {\n    meta:\n        description = \"Detects information stealer targeting browser data and credentials\"\n        author = \"Security Analyst\"\n        date = \"2024-01-01\"\n        category = \"infostealer\"\n        \n    strings:\n        $chrome_path = \"Chrome\\\\User Data\" ascii wide nocase\n        $login_data = \"Login Data\" ascii wide nocase\n        $firefox_cookies = \"cookies.sqlite\" ascii wide nocase\n        \n        // Additional browser-related strings for better detection\n        $browser1 = \"\\\\Local\\\\Google\\\\Chrome\" ascii wide nocase\n        $browser2 = \"\\\\Mozilla\\\\Firefox\\\\Profiles\" ascii wide nocase\n        $browser3 = \"Web Data\" ascii wide nocase\n        $browser4 = \"History\" ascii wide nocase\n        $browser5 = \"Bookmarks\" ascii wide nocase\n        \n        // Credential-related strings\n        $cred1 = \"password\" ascii wide nocase\n        $cred2 = \"username\" ascii wide nocase\n        $cred3 = \"SELECT\" ascii nocase\n        $cred4 = \"encrypted_value\" ascii nocase\n        \n    condition:\n        uint16(0) == 0x5A4D and // PE file\n        filesize < 10MB and\n        (\n            all of ($chrome_path, $login_data, $firefox_cookies) or\n            (2 of them and 2 of ($browser*)) or\n            (2 of them and 2 of ($cred*))\n        )\n}",
+        "generated_response": "```yara\nrule InfoStealer_BrowserData\n{\n    meta:\n        description = \"Detects information stealer targeting browser data and credentials\"\n        author = \"Security Analyst\"\n        date = \"2024-01-01\"\n        category = \"infostealer\"\n        \n    strings:\n        $chrome_path = \"Chrome\\\\User Data\" ascii wide nocase\n        $login_data = \"Login Data\" ascii wide nocase\n        $firefox_cookies = \"cookies.sqlite\" ascii wide nocase\n        \n        // Additional browser-related strings for better detection\n        $browser1 = \"\\\\Local\\\\Google\\\\Chrome\" ascii wide nocase\n        $browser2 = \"\\\\Mozilla\\\\Firefox\\\\Profiles\" ascii wide nocase\n        $browser3 = \"Web Data\" ascii wide nocase\n        $browser4 = \"History\" ascii wide nocase\n        $browser5 = \"Bookmarks\" ascii wide nocase\n        \n        // Credential-related strings\n        $cred1 = \"password\" ascii wide nocase\n        $cred2 = \"username\" ascii wide nocase\n        $cred3 = \"SELECT\" ascii nocase\n        $cred4 = \"encrypted_value\" ascii nocase\n        \n    condition:\n        uint16(0) == 0x5A4D and // PE file\n        filesize < 10MB and\n        (\n            all of ($chrome_path, $login_data, $firefox_cookies) or\n            (2 of them and 2 of ($browser*)) or\n            (2 of them and 2 of ($cred*))\n        )\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "browser_stealer.exe": false,
+          "browser_extension.exe": false,
+          "firefox_addon.exe": false
+        },
+        "expected_strings_found": [
+          "Chrome\\User Data",
+          "Login Data",
+          "cookies.sqlite"
+        ],
+        "expected_keywords_found": [],
+        "score": 0.8666666666666667,
+        "error": null,
+        "latency_ms": 9242.20895767212,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_insufficient_info_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": null,
+        "generated_response": "I cannot create an effective YARA rule based solely on the description \"suspicious activity\" because:\n\n1. **Too vague**: \"Suspicious activity\" doesn't specify any concrete indicators, behaviors, or characteristics that can be translated into detection patterns.\n\n2. **No actionable indicators**: YARA rules require specific elements to detect, such as:\n   - Specific strings or byte patterns\n   - File characteristics (size, headers, sections)\n   - Behavioral artifacts\n   - Known malicious signatures\n\n3. **High false positive risk**: A rule attempting to detect generic \"suspicious activity\" would likely flag many legitimate files and processes.\n\nTo create an effective YARA rule, I would need more specific information such as:\n- Specific strings or commands the malware uses\n- File types or formats involved\n- Network indicators (URLs, IPs, domains)\n- Registry keys or file paths\n- Specific API calls or system behaviors\n- Known malware family characteristics\n\nWithout these concrete details, any rule created would be either too broad (causing many false positives) or too narrow (missing actual threats).",
+        "valid_syntax": true,
+        "execution_results": {},
+        "expected_strings_found": [],
+        "expected_keywords_found": [],
+        "score": 1.0,
+        "error": null,
+        "latency_ms": 8908.017635345459,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_ip_hardcoded_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule Malware_Hardcoded_Suspicious_IPs {\n    meta:\n        description = \"Detects malware with hardcoded IP addresses in suspicious ranges\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        severity = \"medium\"\n        \n    strings:\n        $ip1 = \"192.168.1.100\"\n        $ip2 = \"10.0.0.5\"\n        \n    condition:\n        $ip1 or $ip2\n}",
+        "generated_response": "```yara\nrule Malware_Hardcoded_Suspicious_IPs {\n    meta:\n        description = \"Detects malware with hardcoded IP addresses in suspicious ranges\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        severity = \"medium\"\n        \n    strings:\n        $ip1 = \"192.168.1.100\"\n        $ip2 = \"10.0.0.5\"\n        \n    condition:\n        $ip1 or $ip2\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "hardcoded_ip.exe": true,
+          "internal_ip.exe": true,
+          "public_ip.exe": false
+        },
+        "expected_strings_found": [
+          "192.168.1.100",
+          "10.0.0.5"
+        ],
+        "expected_keywords_found": [
+          "or"
+        ],
+        "score": 1.0,
+        "error": null,
+        "latency_ms": 4117.3577308654785,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_memory_only_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": null,
+        "generated_response": "I need to explain why a YARA rule is not suitable for this case.\n\nA YARA rule cannot effectively detect fileless malware that only exists in memory without any disk artifacts because:\n\n1. **YARA operates on files**: YARA rules are designed to scan files, streams, or memory dumps that can be provided as input. They cannot actively scan running system memory without a memory dump file.\n\n2. **No disk artifacts**: Since fileless malware by definition has no disk presence, there are no files for YARA to scan in the traditional sense.\n\n3. **Memory scanning limitations**: While YARA can scan memory dumps, it requires:\n   - A memory acquisition tool to first capture the memory\n   - The memory to be dumped to a file\n   - At which point it's no longer truly \"fileless\" detection\n\n4. **Real-time memory scanning**: YARA itself doesn't provide real-time memory scanning capabilities. This would require integration with other tools like:\n   - Memory forensics frameworks (Volatility, Rekall)\n   - EDR solutions with memory scanning capabilities\n   - Kernel-level drivers for live memory access\n\nFor detecting fileless malware, you would need:\n- EDR (Endpoint Detection and Response) solutions\n- Memory forensics tools\n- Behavioral analysis systems\n- Process monitoring tools\n- PowerShell/WMI/Script logging and analysis\n\nYARA could only be used as part of a larger solution where memory is first dumped and then scanned, but it cannot independently detect fileless malware in its running state.",
+        "valid_syntax": true,
+        "execution_results": {},
+        "expected_strings_found": [],
+        "expected_keywords_found": [],
+        "score": 1.0,
+        "error": null,
+        "latency_ms": 11982.58662223816,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_not_actionable_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": null,
+        "generated_response": "I cannot create an effective YARA rule for this description because YARA is not suitable for detecting runtime behavior like CPU and memory consumption.\n\nYARA is a pattern-matching engine designed to identify and classify malware based on static characteristics such as:\n- File contents (strings, byte patterns)\n- File structure and headers\n- Specific code sequences\n- Metadata and attributes\n\nRuntime behaviors like high CPU usage and memory consumption:\n- Can only be observed when the malware is actively running\n- Require dynamic analysis tools or system monitoring\n- Cannot be detected by examining the static file content\n- Are not unique to malware (legitimate software can also consume high resources)\n\nTo detect malware based on resource consumption, you would need:\n- System monitoring tools (Performance Monitor, Task Manager, etc.)\n- Behavioral analysis sandboxes\n- EDR (Endpoint Detection and Response) solutions\n- Runtime monitoring frameworks\n\nYARA rules work by scanning files at rest, not by monitoring system performance metrics during execution.",
+        "valid_syntax": true,
+        "execution_results": {},
+        "expected_strings_found": [],
+        "expected_keywords_found": [],
+        "score": 1.0,
+        "error": null,
+        "latency_ms": 9932.559251785278,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_packer_multiple_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule Multiple_Packers_Detection {\n    meta:\n        description = \"Detects executables packed with multiple common packers (UPX, FSG, or PECompact)\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        version = \"1.0\"\n        \n    strings:\n        $upx = \"UPX!\"\n        $fsg = \"FSG!\"\n        $pecompact = \"PECompact\"\n        \n    condition:\n        uint16(0) == 0x5A4D and ($upx or $fsg or $pecompact)\n}",
+        "generated_response": "```yara\nrule Multiple_Packers_Detection\n{\n    meta:\n        description = \"Detects executables packed with multiple common packers (UPX, FSG, or PECompact)\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        version = \"1.0\"\n        \n    strings:\n        $upx = \"UPX!\"\n        $fsg = \"FSG!\"\n        $pecompact = \"PECompact\"\n        \n    condition:\n        uint16(0) == 0x5A4D and ($upx or $fsg or $pecompact)\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "upx_packed.exe": false,
+          "fsg_packed.exe": false,
+          "pecompact_packed.exe": false,
+          "unpacked.exe": false
+        },
+        "expected_strings_found": [
+          "UPX!",
+          "FSG!",
+          "PECompact"
+        ],
+        "expected_keywords_found": [
+          "or"
+        ],
+        "score": 0.7,
+        "error": null,
+        "latency_ms": 4941.979646682739,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_pe_analysis_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule UPX_Packed_System32 {\n    meta:\n        description = \"Detects PE files packed with UPX containing 'system32' string\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $upx1 = \"UPX!\" ascii\n        $upx2 = \"UPX0\" ascii\n        $upx3 = \"UPX1\" ascii\n        $upx4 = \"UPX2\" ascii\n        $system = \"system32\" ascii nocase\n        $mz = { 4D 5A }\n        \n    condition:\n        $mz at 0 and \n        any of ($upx*) and \n        $system\n}",
+        "generated_response": "```yara\nrule UPX_Packed_System32\n{\n    meta:\n        description = \"Detects PE files packed with UPX containing 'system32' string\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $upx1 = \"UPX!\" ascii\n        $upx2 = \"UPX0\" ascii\n        $upx3 = \"UPX1\" ascii\n        $upx4 = \"UPX2\" ascii\n        $system = \"system32\" ascii nocase\n        $mz = { 4D 5A }\n        \n    condition:\n        $mz at 0 and \n        any of ($upx*) and \n        $system\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "upx_packed.exe": false,
+          "normal.exe": false
+        },
+        "expected_strings_found": [
+          "UPX",
+          "system32"
+        ],
+        "expected_keywords_found": [],
+        "score": 0.8,
+        "error": null,
+        "latency_ms": 6097.278118133545,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_position_at_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule PE_MZ_Header_Detection {\n    meta:\n        description = \"Detects PE files with MZ header and 'This program' at specific offsets\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024\"\n        \n    strings:\n        $mz = \"MZ\"\n        $program = \"This program\"\n        \n    condition:\n        $mz at 0 and $program at 78\n}",
+        "generated_response": "```yara\nrule PE_MZ_Header_Detection {\n    meta:\n        description = \"Detects PE files with MZ header and 'This program' at specific offsets\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024\"\n        \n    strings:\n        $mz = \"MZ\"\n        $program = \"This program\"\n        \n    condition:\n        $mz at 0 and $program at 78\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "valid_pe.exe": false,
+          "wrong_offset.exe": false,
+          "no_mz.exe": false
+        },
+        "expected_strings_found": [
+          "MZ",
+          "This program"
+        ],
+        "expected_keywords_found": [
+          "at"
+        ],
+        "score": 0.8666666666666667,
+        "error": null,
+        "latency_ms": 3467.8423404693604,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_ransomware_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule Ransomware_Locked_Extension {\n    meta:\n        description = \"Detects ransomware that creates .locked files and displays encryption message\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        threat_type = \"Ransomware\"\n        \n    strings:\n        $ext = \".locked\" ascii wide nocase\n        $msg = \"Your files have been encrypted\" ascii wide nocase\n        \n    condition:\n        all of them\n}",
+        "generated_response": "```yara\nrule Ransomware_Locked_Extension {\n    meta:\n        description = \"Detects ransomware that creates .locked files and displays encryption message\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        threat_type = \"Ransomware\"\n        \n    strings:\n        $ext = \".locked\" ascii wide nocase\n        $msg = \"Your files have been encrypted\" ascii wide nocase\n        \n    condition:\n        all of them\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "ransom_note.txt": true,
+          "benign.txt": false
+        },
+        "expected_strings_found": [
+          ".locked",
+          "Your files have been encrypted"
+        ],
+        "expected_keywords_found": [],
+        "score": 1.0,
+        "error": null,
+        "latency_ms": 4247.896671295166,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_registry_persistence",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule Windows_Registry_Run_Key_Persistence {\n    meta:\n        description = \"Detects malware that achieves persistence by modifying Windows registry Run key\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        severity = \"high\"\n        technique = \"T1547.001 - Registry Run Keys / Startup Folder\"\n        \n    strings:\n        $reg_path1 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run\" ascii wide nocase\n        $reg_path2 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\RunOnce\" ascii wide nocase\n        $reg_path3 = \"SOFTWARE\\\\Wow6432Node\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run\" ascii wide nocase\n        $reg_api1 = \"RegSetValueEx\" ascii\n        $reg_api2 = \"RegCreateKeyEx\" ascii\n        $reg_api3 = \"RegOpenKeyEx\" ascii\n        \n    condition:\n        uint16(0) == 0x5A4D and\n        any of ($reg_path*) and\n        any of ($reg_api*)\n}",
+        "generated_response": "```yara\nrule Windows_Registry_Run_Key_Persistence\n{\n    meta:\n        description = \"Detects malware that achieves persistence by modifying Windows registry Run key\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        severity = \"high\"\n        technique = \"T1547.001 - Registry Run Keys / Startup Folder\"\n        \n    strings:\n        $reg_path1 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run\" ascii wide nocase\n        $reg_path2 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\RunOnce\" ascii wide nocase\n        $reg_path3 = \"SOFTWARE\\\\Wow6432Node\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run\" ascii wide nocase\n        $reg_api1 = \"RegSetValueEx\" ascii\n        $reg_api2 = \"RegCreateKeyEx\" ascii\n        $reg_api3 = \"RegOpenKeyEx\" ascii\n        \n    condition:\n        uint16(0) == 0x5A4D and\n        any of ($reg_path*) and\n        any of ($reg_api*)\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "persistence_malware.exe": false,
+          "normal_app.exe": false
+        },
+        "expected_strings_found": [
+          "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
+          "RegSetValueEx"
+        ],
+        "expected_keywords_found": [],
+        "score": 0.8,
+        "error": null,
+        "latency_ms": 6216.282606124878,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_string_case_insensitive_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule Malware_Variants_Nocase {\n    meta:\n        description = \"Detects variants of 'MALWARE' regardless of case\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $malware = \"malware\" nocase\n        \n    condition:\n        $malware\n}",
+        "generated_response": "```yara\nrule Malware_Variants_Nocase\n{\n    meta:\n        description = \"Detects variants of 'MALWARE' regardless of case\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $malware = \"malware\" nocase\n        \n    condition:\n        $malware\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "variant1.exe": true,
+          "variant2.exe": true,
+          "variant3.exe": true,
+          "clean.exe": false
+        },
+        "expected_strings_found": [
+          "malware"
+        ],
+        "expected_keywords_found": [
+          "nocase"
+        ],
+        "score": 1.0,
+        "error": null,
+        "latency_ms": 3187.9372596740723,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_string_case_sensitive_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule KeyLogger_System_Detector {\n    meta:\n        description = \"Detects malware containing 'KeyLogger' and 'SYSTEM' strings\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $s1 = \"KeyLogger\" nocase = false\n        $s2 = \"SYSTEM\" nocase = false\n        \n    condition:\n        all of them\n}",
+        "generated_response": "```yara\nrule KeyLogger_System_Detector\n{\n    meta:\n        description = \"Detects malware containing 'KeyLogger' and 'SYSTEM' strings\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $s1 = \"KeyLogger\" nocase = false\n        $s2 = \"SYSTEM\" nocase = false\n        \n    condition:\n        all of them\n}\n```",
+        "valid_syntax": false,
+        "execution_results": {},
+        "expected_strings_found": [],
+        "expected_keywords_found": [],
+        "score": 0.1,
+        "error": "YARA syntax error: line 8: syntax error, unexpected '=', expecting <condition>",
+        "latency_ms": 4624.603033065796,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_string_hex_pattern_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule MZ_Header_With_Program_Text {\n    meta:\n        description = \"Detects MZ header followed by 'This program' within first 200 bytes\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $mz_header = { 4D 5A }\n        $program_text = \"This program\"\n        \n    condition:\n        $mz_header at 0 and $program_text in (0..200)\n}",
+        "generated_response": "```yara\nrule MZ_Header_With_Program_Text\n{\n    meta:\n        description = \"Detects MZ header followed by 'This program' within first 200 bytes\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $mz_header = { 4D 5A }\n        $program_text = \"This program\"\n        \n    condition:\n        $mz_header at 0 and $program_text in (0..200)\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "pe_file.exe": true,
+          "fake_pe.exe": false,
+          "wrong_header.exe": false
+        },
+        "expected_strings_found": [
+          "{ 4D 5A }",
+          "This program"
+        ],
+        "expected_keywords_found": [],
+        "score": 1.0,
+        "error": null,
+        "latency_ms": 4482.177495956421,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_string_multiple_related_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule Ransomware_MultiIndicator {\n    meta:\n        description = \"Detects ransomware with .locked/.encrypted extensions and ransom message\"\n        author = \"Security Analyst\"\n        date = \"2024-01-01\"\n        threat_type = \"Ransomware\"\n        \n    strings:\n        $ext1 = \".locked\" ascii wide nocase\n        $ext2 = \".encrypted\" ascii wide nocase\n        $ransom_msg = \"All your files\" ascii wide nocase\n        \n    condition:\n        any of them\n}",
+        "generated_response": "```yara\nrule Ransomware_MultiIndicator\n{\n    meta:\n        description = \"Detects ransomware with .locked/.encrypted extensions and ransom message\"\n        author = \"Security Analyst\"\n        date = \"2024-01-01\"\n        threat_type = \"Ransomware\"\n        \n    strings:\n        $ext1 = \".locked\" ascii wide nocase\n        $ext2 = \".encrypted\" ascii wide nocase\n        $ransom_msg = \"All your files\" ascii wide nocase\n        \n    condition:\n        any of them\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "ransomware.exe": true,
+          "partial_ransom.exe": true,
+          "clean.exe": false
+        },
+        "expected_strings_found": [
+          ".locked",
+          ".encrypted",
+          "All your files"
+        ],
+        "expected_keywords_found": [],
+        "score": 0.8666666666666667,
+        "error": null,
+        "latency_ms": 5444.649696350098,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_string_wide_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule Detect_CMD_Unicode_Wide {\n    meta:\n        description = \"Detects Unicode/wide strings for 'cmd.exe' in Windows executables\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $cmd_wide = \"cmd.exe\" wide\n        $cmd_ascii = \"cmd.exe\" ascii\n        \n    condition:\n        uint16(0) == 0x5A4D and ($cmd_wide or $cmd_ascii)\n}",
+        "generated_response": "```yara\nrule Detect_CMD_Unicode_Wide\n{\n    meta:\n        description = \"Detects Unicode/wide strings for 'cmd.exe' in Windows executables\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        \n    strings:\n        $cmd_wide = \"cmd.exe\" wide\n        $cmd_ascii = \"cmd.exe\" ascii\n        \n    condition:\n        uint16(0) == 0x5A4D and ($cmd_wide or $cmd_ascii)\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "unicode_binary.exe": false,
+          "ascii_binary.exe": false,
+          "no_cmd.exe": false
+        },
+        "expected_strings_found": [
+          "cmd.exe"
+        ],
+        "expected_keywords_found": [
+          "wide",
+          "ascii"
+        ],
+        "score": 0.7333333333333333,
+        "error": null,
+        "latency_ms": 4131.46448135376,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_suspicious_tld_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule Suspicious_TLD_Communication {\n    meta:\n        description = \"Detects malware communicating with suspicious top-level domains commonly used by threat actors\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        severity = \"medium\"\n        \n    strings:\n        $tld1 = \".tk\" ascii wide nocase\n        $tld2 = \".ml\" ascii wide nocase\n        $tld3 = \".ga\" ascii wide nocase\n        \n    condition:\n        any of ($tld*)\n}",
+        "generated_response": "```yara\nrule Suspicious_TLD_Communication\n{\n    meta:\n        description = \"Detects malware communicating with suspicious top-level domains commonly used by threat actors\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        severity = \"medium\"\n        \n    strings:\n        $tld1 = \".tk\" ascii wide nocase\n        $tld2 = \".ml\" ascii wide nocase\n        $tld3 = \".ga\" ascii wide nocase\n        \n    condition:\n        any of ($tld*)\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "suspicious_c2.exe": true,
+          "another_c2.exe": true,
+          "legitimate_site.exe": false
+        },
+        "expected_strings_found": [
+          ".tk",
+          ".ml",
+          ".ga"
+        ],
+        "expected_keywords_found": [
+          "or"
+        ],
+        "score": 1.0,
+        "error": null,
+        "latency_ms": 4747.342348098755,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      },
+      {
+        "challenge_id": "l1_user_agent_001",
+        "model": "anthropic/claude-opus-4",
+        "generated_rule": "rule Suspicious_UserAgent_Malware {\n    meta:\n        description = \"Detects malware using suspicious or fake User-Agent strings\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        reference = \"HTTP communications with malicious User-Agent headers\"\n        \n    strings:\n        $ua_header = \"User-Agent:\" nocase\n        $mal_bot = \"MalwareBot/1.0\"\n        $evil_client = \"Evil-Client\"\n        \n    condition:\n        $ua_header and ($mal_bot or $evil_client)\n}",
+        "generated_response": "```yara\nrule Suspicious_UserAgent_Malware\n{\n    meta:\n        description = \"Detects malware using suspicious or fake User-Agent strings\"\n        author = \"Cybersecurity Expert\"\n        date = \"2024-01-01\"\n        reference = \"HTTP communications with malicious User-Agent headers\"\n        \n    strings:\n        $ua_header = \"User-Agent:\" nocase\n        $mal_bot = \"MalwareBot/1.0\"\n        $evil_client = \"Evil-Client\"\n        \n    condition:\n        $ua_header and ($mal_bot or $evil_client)\n}\n```",
+        "valid_syntax": true,
+        "execution_results": {
+          "malware_http.exe": true,
+          "normal_browser.exe": false,
+          "no_user_agent.exe": false
+        },
+        "expected_strings_found": [
+          "User-Agent:",
+          "MalwareBot/1.0",
+          "Evil-Client"
+        ],
+        "expected_keywords_found": [
+          "and"
+        ],
+        "score": 1.0,
+        "error": null,
+        "latency_ms": 4480.474948883057,
+        "llm_judge_score": null,
+        "llm_judge_feedback": null,
+        "llm_judge_details": null
+      }
+    ]
+  }
+]
